@@ -6,72 +6,71 @@ using System.Threading.Tasks;
 
 namespace BlocksFactory
 {
-    public enum Shape
+    public enum ShapeName
     {
         Square,
         Triangle,
         Circle
     }
 
-    public enum Color
+    public enum ColorName
     {
         Red,
         Blue,
         Yellow
     }
 
-    public class Price
-    {
-    }
-
-    public abstract class BlockBase
-    {
-        public abstract int GetPrice();
-        public abstract Color BlockColor { get; }
-    }
-
     public interface IPrice
     {
         int GetPrice();
     }
-    public abstract class ColorBase : IPrice
+    public class Color : IPrice
     {
-        private readonly Color _color;
-        public ColorBase(Color color)
-        {
-            this._color = color;
-        }
-        public abstract int GetPrice();
-        public Color BlockColor { get { return _color; } }
-    }
-    public class Red : ColorBase
-    {
+        private readonly ColorName _shapeColor;
         private readonly int _price;
-        public Red(Color color, int price) : base(color)
+        public Color(ColorName shapeColor, int price)
         {
+            this._shapeColor = shapeColor;
             this._price = price;
         }
-        public override int GetPrice()
+        public int GetPrice()
         {
             return _price;
         }
+        public ColorName ShapeColor { get { return _shapeColor; } }
+    }
+    public class Shape : IPrice
+    {
+        private readonly ShapeName _shapeName;
+        private readonly int _price;
+        public Shape(ShapeName shapeName, int price)
+        {
+            this._shapeName = shapeName;
+            this._price = price;
+        }
+        public int GetPrice()
+        {
+            return _price;
+        }
+        public ShapeName ShapeName { get { return _shapeName; } }
     }
 
-    public class Block : BlockBase
+    public class Block : IPrice
     {
-        private readonly ColorBase _colorBase;
-        private readonly int _shapePrice;
+        private readonly Color _color;
+        private readonly Shape _shape;
 
-        public Block(ColorBase colorBase, int shapePrice)
+        public Block(Color color, Shape shape)
         {
-            this._colorBase = colorBase;
-            this._shapePrice = shapePrice;
+            this._color = color;
+            this._shape = shape;
         }
-        public override Color BlockColor { get { return _colorBase.BlockColor; } }
+        public ColorName BlockColor { get { return _color.ShapeColor; } }
+        public ShapeName ShapeName { get { return _shape.ShapeName; } }
 
-        public override int GetPrice()
+        public int GetPrice()
         {
-            return _colorBase.GetPrice() + _shapePrice;
+            return _color.GetPrice() + _shape.GetPrice();
         }
     }
 }
