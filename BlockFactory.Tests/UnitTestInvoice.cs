@@ -27,7 +27,7 @@ namespace BlockFactory.Tests
  | Triangle | -   | 2    | -      | 
  | Circle   | -   | 1    | 2      | 
 ";
-            var res = TableParser.GetTable(blocks);
+            var res = TableParser.GetTable(blocks, new[] { " ", ColorName.Red.ToString(), ColorName.Blue.ToString(), ColorName.Yellow.ToString() });
             Assert.NotNull(res);
             Assert.Equal(table, res);
         }
@@ -51,7 +51,7 @@ namespace BlockFactory.Tests
   Triangle  -  2  -  
   Circle    -  1  2  
 ";
-            var res = TableParserNoHeader.GetTable(blocks);
+            var res = TableParser.GetTable(blocks, null);
             Assert.NotNull(res);
             Assert.Equal(table, res);
         }

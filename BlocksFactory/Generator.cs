@@ -50,9 +50,9 @@ namespace BlocksFactory
             stringBuilder.AppendLine("Your invoice report has been generated:/n");
             stringBuilder.AppendLine(customer.ToString() + order.ToString());
 
-            var tableShapes = TableParser.GetTable(shapes);
+            var tableShapes = TableParser.GetTable(shapes, null);
 
-            var tableNoHeaders = TableParserNoHeader.GetTable(shapes);
+            //var tableNoHeaders = TableParserNoHeader.GetTable(shapes);
 
             return "";
         }
